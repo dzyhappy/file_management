@@ -1,0 +1,50 @@
+# ServerProperties
+server:
+  port: 8080
+  #访问根
+  servlet:
+    context-path: /management
+
+
+# DataSourceProperties
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 15
+      idle-timeout: 30000
+      minimum-idle: 5
+    # Redis配置,选用11号库
+  redis:
+    database: 11
+    host: 192.168.136.100
+    port: 6379
+    password: 123456
+
+# MybatisPlusProperties
+mybatis-plus:
+  mapper-locations: mapper/*.xml
+  type-aliases-package: com.file_management.project.entity
+  configuration:
+    # 自动生成id
+    useGeneratedKeys: true
+    mapUnderscoreToCamelCase: true
+
+# logger
+#在类中声明一个logger就会自动把这个类的日志信息记录到配置文件，logback.xml里设置的地址文件中
+logging:
+  level:
+    com.file_management.project: debug
+#  输出日志到文件，日志设置已经由logback-spring.xml接管，日志无需另外设置
+
+
+# 一些自由配置---相当于常量
+fileManagement:
+  #例如存放头像路径和项目访问路径
+  path:
+    #domain: http://127.0.0.1:8080
+    #upload: d:/01-document/01-Project/upload
