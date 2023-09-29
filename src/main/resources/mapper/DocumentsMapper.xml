@@ -16,7 +16,8 @@
         id,name,type_id,
         file_location,overview
     </sql>
+
     <select id="GetDocumentsById" resultType="file_management.peoject.entity.vo.DocumentsVo">
-        select id,name,type_id,overview from documents where id = #{numbers}
+        select id,name,type_id,overview from documents where type_id = #{numbers}
     </select>
 </mapper>

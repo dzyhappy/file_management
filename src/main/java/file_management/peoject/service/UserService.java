@@ -1,7 +1,8 @@
 package file_management.peoject.service;
 
-import file_management.peoject.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import file_management.peoject.common.Result;
+import file_management.peoject.entity.User;
 
 /**
 * @author dzyhappy
@@ -10,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
+    Result login(User user);
 }

@@ -1,7 +1,7 @@
 package file_management.peoject.util;
 
 
-/*
+/**
 *
 * redis的key的工具类
 *
@@ -13,7 +13,7 @@ public class RedisKeyUtil {
     * */
     private static final String SPLIT = ":";
     //登录凭证
-    private static final String PREFIX_TICKET = "ticket";
+    private static final String PREFIX_TICKET = "token";
     //用户信息
     private static final String PREFIX_USER = "user";
 

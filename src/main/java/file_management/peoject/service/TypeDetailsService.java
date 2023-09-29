@@ -3,6 +3,8 @@ package file_management.peoject.service;
 import file_management.peoject.entity.TypeDetails;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author dzyhappy
 * @description 针对表【type_details】的数据库操作Service
@@ -10,4 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TypeDetailsService extends IService<TypeDetails> {
 
+
+    List<TypeDetails> selectList();
 }

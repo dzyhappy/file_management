@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import file_management.peoject.mapper.TypeDetailsMapper;
 import file_management.peoject.entity.TypeDetails;
 import file_management.peoject.service.TypeDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author dzyhappy
@@ -15,6 +18,13 @@ import org.springframework.stereotype.Service;
 public class TypeDetailsServiceImpl extends ServiceImpl<TypeDetailsMapper, TypeDetails>
     implements TypeDetailsService{
 
+    @Autowired
+    private TypeDetailsMapper typeDetailsMapper;
+
+    @Override
+    public List<TypeDetails> selectList() {
+        return typeDetailsMapper.selectList(null);
+    }
 }
 
 
