@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
 
-        //这里是把记录存到数据库
+        //把记录存到数据库
         QueryWrapper<UserLoginLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",loginUser.getUser().getId().toString());
         UserLoginLog loginLog = userLoginLogMapper.selectOne(queryWrapper);

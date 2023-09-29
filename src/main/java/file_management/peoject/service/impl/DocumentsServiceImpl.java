@@ -1,12 +1,14 @@
 package file_management.peoject.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import file_management.peoject.entity.Documents;
-import file_management.peoject.entity.vo.DocumentsVo;
 import file_management.peoject.mapper.DocumentsMapper;
 import file_management.peoject.service.DocumentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author dzyhappy
@@ -23,10 +25,11 @@ public class DocumentsServiceImpl extends ServiceImpl<DocumentsMapper, Documents
 
 
     @Override
-    public DocumentsVo GetDocumentsById(Integer documentsIds) {
-        DocumentsVo documents = documentsMapper.GetDocumentsById(documentsIds);
-        System.out.println(documents);
-        return documents;
+    public List<Documents> GetDocumentsById(Integer typeId) {
+        QueryWrapper<Documents> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type_id",typeId);
+        List<Documents> documentsList = documentsMapper.selectList(queryWrapper);
+        return documentsList;
     }
 }
 
