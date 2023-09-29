@@ -2,6 +2,7 @@ package file_management.peoject.service;
 
 import file_management.peoject.entity.Documents;
 import com.baomidou.mybatisplus.extension.service.IService;
+import file_management.peoject.entity.vo.DocumentsVo;
 
 /**
 * @author dzyhappy
@@ -10,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DocumentsService extends IService<Documents> {
 
+    public DocumentsVo GetDocumentsById(Integer documentsId);
 }
