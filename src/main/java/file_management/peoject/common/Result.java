@@ -59,4 +59,15 @@ public class Result implements Serializable {
         return result;
     }
 
+    /*
+    * 登录验证失败
+    * */
+    public static Result tokenFail(int code,String msg){
+        Result result=new Result();
+        result.code=code;
+        result.message=msg;
+        result.data=null;
+        return result;
+    }
+
 }
