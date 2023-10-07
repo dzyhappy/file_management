@@ -2,7 +2,11 @@ package file_management.peoject.mapper;
 
 import file_management.peoject.entity.Documents;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import file_management.peoject.entity.vo.DocumentsVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 /**
 * @author dzyhappy
@@ -12,6 +16,8 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface DocumentsMapper extends BaseMapper<Documents> {
+
+    DocumentsVo GetDocumentsById(Integer numbers);
 
 }
 
