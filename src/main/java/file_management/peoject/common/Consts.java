@@ -14,4 +14,6 @@ import org.springframework.stereotype.Component;
 public class Consts {
     @Value("${file.upload.dir}")
     private String uploadDir;
+
+
 }

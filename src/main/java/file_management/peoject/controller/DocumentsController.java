@@ -1,13 +1,13 @@
 package file_management.peoject.controller;
-import file_management.peoject.common.DeleteRequest;
-import file_management.peoject.common.DownloadRequest;
-import file_management.peoject.common.DownloadResponse;
-import file_management.peoject.common.Result;
+
+import file_management.peoject.common.*;
 import file_management.peoject.entity.Documents;
 import file_management.peoject.service.DocumentsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/file")
@@ -16,28 +16,30 @@ public class DocumentsController {
     @Autowired
     private DocumentsService documentsService; // DocumentsService 用于处理档案的业务逻辑
 
-    // 上传
+    /**
+    * 上传
+    * */
     @PostMapping("/upload")
-    public Result uploadDocument(@RequestParam("file") Documents file,
-                                 @RequestParam("typeId") Integer typeId,
-                                 @RequestParam("name") String name,
-                                 @RequestParam("overview") String overview) {
+    public Result uploadDocument(@RequestBody UploadRequest uploadRequest) {
         try {
-            Documents document = new Documents();
-            document.setTypeId(typeId);
-            document.setName(name);
-            document.setOverview(overview);
+            Documents document=new Documents();
+            document.setFileLocation(uploadRequest.getFile());
+            document.setName(uploadRequest.getName());
+            document.setOverview(uploadRequest.getOverview());
+            document.setTypeId(uploadRequest.getTypeId());
             // 处理文件上传
-            documentsService.uploadDocument(file);
+            documentsService.uploadDocument(document);
             return Result.success("上传成功");
         } catch (Exception e) {
             return Result.fail("上传失败");
         }
     }
 
-    // 下载接口
+    /**
+     * 下载
+     * */
     @PostMapping("/download")
-    public Result downloadDocument(@RequestBody DownloadRequest request) {// DownloadRequest 用于接收下载请求
+    public Result downloadDocument(@RequestBody DownloadRequest request) {
         try {
             Documents document = documentsService.getDocumentById(request.getId());// 根据ID查询档案
             if (document != null) {// 如果档案存在
