@@ -1,9 +1,7 @@
 package file_management.peoject.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import file_management.peoject.entity.LoginUser;
-import file_management.peoject.entity.UserLoginLog;
 import file_management.peoject.mapper.UserLoginLogMapper;
 import file_management.peoject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -37,23 +35,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(httpServletRequest,httpServletResponse);
             return;     //防止过滤器链返回执行时往这个过滤器后进行
         }
-        String userid;
+        String loginUserStr;
         try {
             Claims claims = JwtUtil.parseJWT(token);
-            userid = claims.getSubject();
+            loginUserStr = claims.getSubject();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("token非法");
         }
 
-        //从登录记录中获取用户信息
-        QueryWrapper<UserLoginLog> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userid);
-        UserLoginLog loginLog = userLoginLogMapper.selectOne(queryWrapper);
-        String loginUserJson = loginLog.getDetails();
         //将json转回loginUser对象
-        LoginUser loginUser =JSON.parseObject(loginUserJson,LoginUser.class);
-
+        LoginUser loginUser =JSON.parseObject(loginUserStr,LoginUser.class);
 
         //存入SecurityContextHolder
         //获取权限信息封装到Authentication中

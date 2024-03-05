@@ -1,12 +1,10 @@
 package file_management.peoject.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.LoginUser;
 import file_management.peoject.entity.User;
-import file_management.peoject.entity.UserLoginLog;
 import file_management.peoject.entity.vo.UserVO;
 import file_management.peoject.mapper.UserLoginLogMapper;
 import file_management.peoject.mapper.UserMapper;
@@ -49,23 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         //使用userid生成token
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
-        String userId = loginUser.getUser().getId().toString();
-        String jwt = JwtUtil.createJWT(userId);
-
-        //把记录存到数据库
-        QueryWrapper<UserLoginLog> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",loginUser.getUser().getId().toString());
-        UserLoginLog loginLog = userLoginLogMapper.selectOne(queryWrapper);
-        if (Objects.isNull(loginLog)){
-            loginLog = new UserLoginLog();
-            loginLog.setUserId(userId);
-            loginLog.setDetails(JSON.toJSONString(loginUser));
-            userLoginLogMapper.insert(loginLog);
-        }else {
-            loginLog.setUserId(userId);
-            loginLog.setDetails(JSON.toJSONString(loginUser));
-            userLoginLogMapper.updateById(loginLog);
-        }
+        String jwt = JwtUtil.createJWT(JSON.toJSONString(loginUser));
 
         //构建返回对象
         UserVO userVO = new UserVO();
