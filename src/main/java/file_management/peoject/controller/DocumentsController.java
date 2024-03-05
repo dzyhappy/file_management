@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+* 文件操作
+* */
+
 @RestController
 @RequestMapping("/file")
 public class DocumentsController {
@@ -57,10 +62,15 @@ public class DocumentsController {
 
     // 修改接口
     @PostMapping("/save")
-    public Result saveDocument(@RequestBody Documents document) {
+    public Result saveDocument(@RequestBody UpdateRequest updateRequest) {
         try {
+            Documents document=new Documents();
+            document.setFileLocation(updateRequest.getFile());
+            document.setName(updateRequest.getName());
+            document.setOverview(updateRequest.getOverview());
+            document.setTypeId(updateRequest.getTypeId());
             // 处理修改操作，你可以在 DocumentsService 中实现具体的修改逻辑
-            documentsService.updateDocument(document.getId(), document);
+            documentsService.updateDocument(updateRequest.getId(), document);
             return Result.success("成功");
         } catch (Exception e) {
             return Result.fail("失败");

@@ -31,7 +31,7 @@ public interface DocumentsService {
      * @param updatedDocument 更新后的档案对象
      * @return 更新后的档案对象
      */
-    Documents updateDocument(Integer id, Documents updatedDocument);
+    void updateDocument(Integer id, Documents updatedDocument);
 
     /**
      * 删除档案

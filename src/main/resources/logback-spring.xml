@@ -3,7 +3,7 @@
 <configuration>
     <contextName>community</contextName>
 <!--    日志存放大目录-->
-    <property name="LOG_PATH" value="D:/01-document/01-Project/logger"/>
+    <property name="LOG_PATH" value="${user.dir}/logger"/>
 <!--    下级目录-->
     <property name="APPDIR" value="file_management"/>
 

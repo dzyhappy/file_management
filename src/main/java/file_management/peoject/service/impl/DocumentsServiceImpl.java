@@ -34,11 +34,10 @@ public class DocumentsServiceImpl implements DocumentsService {
         return documentsList;
     }
 
-    public Documents updateDocument(Integer id, Documents updatedDocument) {
+    public void updateDocument(Integer id, Documents updatedDocument) {
         // 设置档案的ID并执行更新操作
         updatedDocument.setId(id);
         documentsMapper.updateById(updatedDocument);
-        return updatedDocument;
     }
 
     @Override

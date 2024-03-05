@@ -47,9 +47,9 @@ file:
     dir: ${user.dir}/upload
 
 
-# 一些自由配置---相当于常量
+# 一些自由配置
 fileManagement:
-  #例如存放头像路径和项目访问路径
+  #访问路径
   path:
     #domain: http://127.0.0.1:8080
     #upload: d:/01-document/01-Project/upload
