@@ -4,9 +4,6 @@ package file_management.peoject.util;
  *  定义常量
  */
 public interface NameConstant {
-
-    //以下为示例
-
     /*
     *   超时时间，2天
     * */
