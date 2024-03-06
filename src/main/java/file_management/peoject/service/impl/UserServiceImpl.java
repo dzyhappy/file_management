@@ -6,7 +6,6 @@ import file_management.peoject.common.Result;
 import file_management.peoject.entity.LoginUser;
 import file_management.peoject.entity.User;
 import file_management.peoject.entity.vo.UserVO;
-import file_management.peoject.mapper.UserLoginLogMapper;
 import file_management.peoject.mapper.UserMapper;
 import file_management.peoject.service.UserService;
 import file_management.peoject.util.JwtUtil;
@@ -32,8 +31,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private UserLoginLogMapper userLoginLogMapper;
 
     @Override
     public Result login(User user) {

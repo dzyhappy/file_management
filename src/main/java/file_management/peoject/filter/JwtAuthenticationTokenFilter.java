@@ -2,10 +2,8 @@ package file_management.peoject.filter;
 
 import com.alibaba.fastjson.JSON;
 import file_management.peoject.entity.LoginUser;
-import file_management.peoject.mapper.UserLoginLogMapper;
 import file_management.peoject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -24,9 +22,6 @@ import java.io.IOException;
  * */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
-    @Autowired
-    private UserLoginLogMapper userLoginLogMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
