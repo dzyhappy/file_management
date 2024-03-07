@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file_management.peoject.mapper.SupervisorAssessmentMapper">
+
+    <resultMap id="BaseResultMap" type="file_management.peoject.entity.SupervisorAssessment">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+            <result property="teacherId" column="teacher_id" jdbcType="CHAR"/>
+            <result property="cls" column="cls" jdbcType="VARCHAR"/>
+            <result property="date" column="date" jdbcType="DATE"/>
+            <result property="order" column="order" jdbcType="TINYINT"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="shouldTotal" column="should_total" jdbcType="SMALLINT"/>
+            <result property="haveTotal" column="have_total" jdbcType="SMALLINT"/>
+            <result property="lateTotal" column="late_total" jdbcType="SMALLINT"/>
+            <result property="shool" column="shool" jdbcType="VARCHAR"/>
+            <result property="year" column="year" jdbcType="OTHER"/>
+            <result property="score" column="score" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,course_name,teacher_id,
+        cls,date,order,
+        address,should_total,have_total,
+        late_total,shool,year,
+        score
+    </sql>
+</mapper>

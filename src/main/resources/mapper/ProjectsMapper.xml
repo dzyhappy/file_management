@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file_management.peoject.mapper.ProjectsMapper">
+
+    <resultMap id="BaseResultMap" type="file_management.peoject.entity.Projects">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="startDate" column="start_date" jdbcType="DATE"/>
+            <result property="endDate" column="end_date" jdbcType="DATE"/>
+            <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="level" column="level" jdbcType="VARCHAR"/>
+            <result property="award" column="award" jdbcType="VARCHAR"/>
+            <result property="softwareWorks" column="software_works" jdbcType="VARCHAR"/>
+            <result property="softwareWorksPhoto" column="software_works_photo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_name,description,
+        start_date,end_date,teacher_id,
+        level,award,software_works,
+        software_works_photo
+    </sql>
+</mapper>

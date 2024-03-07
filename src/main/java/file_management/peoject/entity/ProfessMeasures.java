@@ -1,104 +1,123 @@
 package file_management.peoject.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
+import java.io.Serializable;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+/**
+ * 培养措施路径存储
+ * @TableName profess_measures
+ */
+@TableName(value ="profess_measures")
 @Data
-@AllArgsConstructor
-@TableName("profess_measures")
-public class ProfessMeasures {
+public class ProfessMeasures implements Serializable {
     /**
-     * 优点内容
+     * 
      */
-    private String adContent;
-    /**
-     * 创建的时间
-     */
-    private String createTime;
-    /**
-     * 文档的id
-     */
-    private Integer fileId;
-    /**
-     * 文档的存储地址
-     */
-    private String fileLocation;
-    /**
-     * 文档ID
-     */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
+
     /**
      * 教师姓名
      */
     private String name;
+
     /**
-     * 外键用来连接教师的
+     * 教师的工号
      */
     private Integer teacherId;
+
     /**
-     * 缺点内容
+     * 文档id
+     */
+    private Integer fileId;
+
+    /**
+     * 文档
+     */
+    private String fileLocation;
+
+    /**
+     * 优点的内容
+     */
+    private String adContent;
+
+    /**
+     * 缺点的内容
      */
     private String uadContent;
+
     /**
-     * 更新的时间
+     * 
+     */
+    private String createTime;
+
+    /**
+     * 
      */
     private String updateTime;
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("ProfessMeasures{");
-        sb.append("adContent='").append(adContent).append('\'');
-        sb.append(", createTime='").append(createTime).append('\'');
-        sb.append(", fileId=").append(fileId);
-        sb.append(", fileLocation='").append(fileLocation).append('\'');
-        sb.append(", id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", teacherId=").append(teacherId);
-        sb.append(", uadContent='").append(uadContent).append('\'');
-        sb.append(", updateTime='").append(updateTime).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ProfessMeasures that = (ProfessMeasures) o;
-
-        if (getFileId() != that.getFileId()) return false;
-        if (getId() != that.getId()) return false;
-        if (getTeacherId() != that.getTeacherId()) return false;
-        if (getAdContent() != null ? !getAdContent().equals(that.getAdContent()) : that.getAdContent() != null)
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
             return false;
-        if (getCreateTime() != null ? !getCreateTime().equals(that.getCreateTime()) : that.getCreateTime() != null)
+        }
+        if (getClass() != that.getClass()) {
             return false;
-        if (getFileLocation() != null ? !getFileLocation().equals(that.getFileLocation()) : that.getFileLocation() != null)
-            return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getUadContent() != null ? !getUadContent().equals(that.getUadContent()) : that.getUadContent() != null)
-            return false;
-        return getUpdateTime() != null ? getUpdateTime().equals(that.getUpdateTime()) : that.getUpdateTime() == null;
+        }
+        ProfessMeasures other = (ProfessMeasures) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getTeacherId() == null ? other.getTeacherId() == null : this.getTeacherId().equals(other.getTeacherId()))
+            && (this.getFileId() == null ? other.getFileId() == null : this.getFileId().equals(other.getFileId()))
+            && (this.getFileLocation() == null ? other.getFileLocation() == null : this.getFileLocation().equals(other.getFileLocation()))
+            && (this.getAdContent() == null ? other.getAdContent() == null : this.getAdContent().equals(other.getAdContent()))
+            && (this.getUadContent() == null ? other.getUadContent() == null : this.getUadContent().equals(other.getUadContent()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
     public int hashCode() {
-        int result = getAdContent() != null ? getAdContent().hashCode() : 0;
-        result = 31 * result + (getCreateTime() != null ? getCreateTime().hashCode() : 0);
-        result = 31 * result + (int) (getFileId() ^ (getFileId() >>> 32));
-        result = 31 * result + (getFileLocation() != null ? getFileLocation().hashCode() : 0);
-        result = 31 * result + (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (int) (getTeacherId() ^ (getTeacherId() >>> 32));
-        result = 31 * result + (getUadContent() != null ? getUadContent().hashCode() : 0);
-        result = 31 * result + (getUpdateTime() != null ? getUpdateTime().hashCode() : 0);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getTeacherId() == null) ? 0 : getTeacherId().hashCode());
+        result = prime * result + ((getFileId() == null) ? 0 : getFileId().hashCode());
+        result = prime * result + ((getFileLocation() == null) ? 0 : getFileLocation().hashCode());
+        result = prime * result + ((getAdContent() == null) ? 0 : getAdContent().hashCode());
+        result = prime * result + ((getUadContent() == null) ? 0 : getUadContent().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", teacherId=").append(teacherId);
+        sb.append(", fileId=").append(fileId);
+        sb.append(", fileLocation=").append(fileLocation);
+        sb.append(", adContent=").append(adContent);
+        sb.append(", uadContent=").append(uadContent);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
 }
