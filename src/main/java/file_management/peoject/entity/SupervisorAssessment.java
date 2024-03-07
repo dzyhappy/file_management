@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -39,6 +41,7 @@ public class SupervisorAssessment implements Serializable {
     /**
      * 听课日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     /**

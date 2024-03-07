@@ -1,37 +1,38 @@
 package file_management.peoject.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
-import file_management.peoject.entity.Project;
-import file_management.peoject.entity.StudenTest;
-import file_management.peoject.service.ProjectService;
-import org.apache.ibatis.annotations.Mapper;
+import file_management.peoject.entity.Projects;
+import file_management.peoject.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
 @RequestMapping("/teacher/project")
-public class ProjectController {
+public class ProjectsController {
     @Autowired
-    ProjectService projectService;
+    ProjectsService projectService;
 
     //信息获取
     @PostMapping("/details")
-    public Result Details(@RequestBody Project project){
+    public Result Details(@RequestBody Projects project){
 
-        List<Project> projects = projectService.SelectByTeacherId(Integer.parseInt(project.getTeacherId()));
+        LambdaQueryWrapper<Projects> wrapper =new LambdaQueryWrapper();
+
+        wrapper.eq(Projects::getTeacherId,project.getTeacherId());
+
+        List<Projects> projects = projectService.list(wrapper);
+
         return Result.success("成功",projects);
     }
 
     @PostMapping("/save")
-    public Result Upload(@RequestBody Project project){
+    public Result Upload(@RequestBody Projects project){
 
 
-        Boolean aBoolean = projectService.SaveProject(project);
+        Boolean aBoolean = projectService.save(project);
 
         if(!aBoolean){
             return Result.success();
@@ -41,7 +42,7 @@ public class ProjectController {
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody Project project){
+    public Result update(@RequestBody Projects project){
 
         projectService.updateById(project);
 
@@ -49,7 +50,7 @@ public class ProjectController {
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestBody Project project){
+    public Result delete(@RequestBody Projects project){
 
 
        projectService.removeById(project);

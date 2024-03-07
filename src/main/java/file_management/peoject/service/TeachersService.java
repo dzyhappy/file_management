@@ -1,7 +1,9 @@
 package file_management.peoject.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.entity.Teachers;
 import com.baomidou.mybatisplus.extension.service.IService;
+import file_management.peoject.entity.TeachersWorks;
 
 /**
 * @author dzyhappy
