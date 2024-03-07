@@ -27,7 +27,7 @@ public class MvcConfig implements WebMvcConfigurer {
         return new ModelMapper();
     }
 
-    //使mvc可知晓图片保存路径
+    //图片保存路径
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
                                         //要注入的文件
