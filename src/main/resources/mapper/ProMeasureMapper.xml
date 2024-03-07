@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="file_management.peoject.mapper.ProMeasureMapper">
+    <update id="UpdateByFileId" parameterType="file_management.peoject.entity.ProfessMeasures">
+        UPDATE profess_measures SET
+                              ad_content = #{adContent},
+                              create_time = #{createTime},
+                              file_id = #{fileId},
+                              file_location = #{fileLocation},
+                              id = #{id},
+                              name = #{name},
+                              teacher_id = #{teacherId},
+                              uad_content = #{uadContent},
+                              update_time = #{updateTime}
+        WHERE file_id = #{fileId}
+    </update>
+    <delete id="DeleteByFileId">
+        delete from profess_measures where file_id=#{fileid}
+    </delete>
+    <select id="GetAllByteacherId" resultType="file_management.peoject.entity.ProfessMeasures">
+        select  * from profess_measures where teacher_id=#{teacherid}
+    </select>
+    <select id="SelectByFileId" resultType="java.lang.Boolean">
+        select * from profess_measures where file_id=#{fileid}
+    </select>
+</mapper>
