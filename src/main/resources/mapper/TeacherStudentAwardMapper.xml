@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file_management.peoject.mapper.TeacherStudentAwardMapper">
+
+    <resultMap id="BaseResultMap" type="file_management.peoject.entity.TeacherStudentAward">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="sequence" column="sequence" jdbcType="VARCHAR"/>
+            <result property="college" column="college" jdbcType="VARCHAR"/>
+            <result property="competitionName" column="competition_name" jdbcType="VARCHAR"/>
+            <result property="entryName" column="entry_name" jdbcType="VARCHAR"/>
+            <result property="supervisor" column="supervisor" jdbcType="VARCHAR"/>
+            <result property="contactNumber" column="contact_number" jdbcType="VARCHAR"/>
+            <result property="level" column="level" jdbcType="VARCHAR"/>
+            <result property="honorLevel" column="honor_level" jdbcType="VARCHAR"/>
+            <result property="organizingUnit" column="organizing_unit" jdbcType="VARCHAR"/>
+            <result property="competitionCategory" column="competition_category" jdbcType="VARCHAR"/>
+            <result property="awardDate" column="award_date" jdbcType="DATE"/>
+            <result property="projectLeader" column="project_leader" jdbcType="VARCHAR"/>
+            <result property="studentId" column="student_id" jdbcType="VARCHAR"/>
+            <result property="leaderContactNumber" column="leader_contact_number" jdbcType="VARCHAR"/>
+            <result property="teamMembers" column="team_members" jdbcType="VARCHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,sequence,college,
+        competition_name,entry_name,supervisor,
+        contact_number,level,honor_level,
+        organizing_unit,competition_category,award_date,
+        project_leader,student_id,leader_contact_number,
+        team_members,remarks
+    </sql>
+</mapper>

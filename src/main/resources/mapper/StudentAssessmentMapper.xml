@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file_management.peoject.mapper.StudentAssessmentMapper">
+
+    <resultMap id="BaseResultMap" type="file_management.peoject.entity.StudentAssessment">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="teacherId" column="teacher_id" jdbcType="CHAR"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+            <result property="averageScore" column="average_score" jdbcType="FLOAT"/>
+            <result property="sampleTotal" column="sample_total" jdbcType="INTEGER"/>
+            <result property="participationRate" column="participation_rate" jdbcType="INTEGER"/>
+            <result property="year" column="year" jdbcType="OTHER"/>
+            <result property="term" column="term" jdbcType="TINYINT"/>
+            <result property="school" column="school" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,teacher_id,course_name,
+        average_score,sample_total,participation_rate,
+        year,term,school
+    </sql>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file_management.peoject.mapper.ProfessMeasuresMapper">
+
+    <resultMap id="BaseResultMap" type="file_management.peoject.entity.ProfessMeasures">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="fileId" column="file_id" jdbcType="INTEGER"/>
+            <result property="fileLocation" column="file_location" jdbcType="VARCHAR"/>
+            <result property="adContent" column="ad_content" jdbcType="VARCHAR"/>
+            <result property="uadContent" column="uad_content" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,teacher_id,
+        file_id,file_location,ad_content,
+        uad_content,create_time,update_time
+    </sql>
+</mapper>
