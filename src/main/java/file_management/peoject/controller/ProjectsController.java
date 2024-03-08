@@ -23,7 +23,7 @@ public class ProjectsController {
 
     //信息获取
     @PostMapping("/details")
-    public Result Details(@Valid @RequestBody Projects project){
+    public Result Details(@RequestBody Projects project){
 
         LambdaQueryWrapper<Projects> wrapper =new LambdaQueryWrapper();
 

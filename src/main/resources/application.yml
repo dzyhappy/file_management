@@ -1,6 +1,9 @@
 # ServerProperties
 server:
   port: 8080
+  #访问根
+  servlet:
+    context-path: /management
 
 
 # DataSourceProperties

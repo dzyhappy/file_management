@@ -1,3 +1,4 @@
+/*
 package file_management.peoject.controller;
 
 import file_management.peoject.common.*;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+*/
 /**
 * 文件操作
-* */
+* *//*
+
 
 @RestController
 @RequestMapping("/file")
@@ -21,9 +24,11 @@ public class DocumentsController {
     @Autowired
     private DocumentsService documentsService; // DocumentsService 用于处理档案的业务逻辑
 
-    /**
+    */
+/**
     * 上传
-    * */
+    * *//*
+
     @PostMapping("/upload")
     public Result uploadDocument(@RequestBody UploadRequest uploadRequest) {
         try {
@@ -40,9 +45,11 @@ public class DocumentsController {
         }
     }
 
-    /**
+    */
+/**
      * 下载
-     * */
+     * *//*
+
     @PostMapping("/download")
     public Result downloadDocument(@RequestBody DownloadRequest request) {
         try {
@@ -92,3 +99,4 @@ public class DocumentsController {
         }
     }
 }
+*/
