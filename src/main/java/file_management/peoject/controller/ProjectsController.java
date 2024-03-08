@@ -5,7 +5,10 @@ import file_management.peoject.common.Result;
 import file_management.peoject.entity.Projects;
 import file_management.peoject.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -35,16 +38,20 @@ public class ProjectsController {
         Boolean aBoolean = projectService.save(project);
 
         if(!aBoolean){
-            return Result.success();
+            return Result.fail("添加失败");
         }
 
-        return Result.fail("添加失败");
+        return Result.success();
     }
 
     @PostMapping("/update")
     public Result update(@RequestBody Projects project){
 
-        projectService.updateById(project);
+        boolean b = projectService.updateById(project);
+
+        if(!b){
+            return Result.fail("添加失败");
+        }
 
         return Result.success();
     }

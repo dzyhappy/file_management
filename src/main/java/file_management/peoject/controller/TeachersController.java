@@ -23,7 +23,7 @@ public class TeachersController {
         Teachers teacher = service.getById(id);
 
 
-        return Result.success("新增成功",teacher);
+        return Result.success("查询成功",teacher);
     }
 
 
@@ -48,8 +48,11 @@ public class TeachersController {
     @PostMapping("/upload")
     public Result uploadInformation(@RequestBody Teachers teacher){
 
-        System.out.println(teacher);
+        boolean s = service.save(teacher);
 
+        if(!s){
+            return Result.fail("添加失败");
+        }
 
         return Result.success();
     }
@@ -58,7 +61,7 @@ public class TeachersController {
     public Result getall(){
 
         List<Teachers> list = service.list();
-        return Result.success("新增成功",list);
+        return Result.success("查询成功",list);
     }
 
 }

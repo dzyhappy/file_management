@@ -32,7 +32,7 @@ public class ProMeasureController {
     @PostMapping("savemeasures")
     public Result savemeasures(@RequestBody ProfessMeasures professMeasures){
 
-        proMeasureService.SaveProfess(professMeasures);
+        proMeasureService.save(professMeasures);
 
         return Result.success();
     }
@@ -40,7 +40,7 @@ public class ProMeasureController {
     @PostMapping("update")
     public Result update(@RequestBody ProfessMeasures professMeasures){
 
-        proMeasureService.UpdateByFileId(professMeasures);
+        proMeasureService.updateById(professMeasures);
 
         return Result.success();
     }

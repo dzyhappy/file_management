@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * 因为并没有在teacherAward表中设置主键所以mq中所有的ById方法都不能使用
  */
 @RestController
-@RequestMapping("//teacher_student_award")
+@RequestMapping("/teacher_student_award")
 public class TeacherStudentAwardController {
 
     @Autowired
@@ -60,7 +60,6 @@ public class TeacherStudentAwardController {
         List<Integer> teacherids = tearcherAwardService.list(wrapper).stream().map(TeacherAward::getTeacherId).collect(Collectors.toList());
 
 
-
         TeacherStudentAward teacherStudentAward =new TeacherStudentAward();
         BeanUtils.copyProperties(teacher,teacherStudentAward);
 
@@ -80,16 +79,13 @@ public class TeacherStudentAwardController {
             });
 
             //然后直接更新
-            teacherStudentAwardService.update(wrapper1);
+            teacherStudentAwardService.update(teacherStudentAward,wrapper1);
             return Result.success();
 
         }
 
-
         //如果为空 那么直接修改
         teacherStudentAwardService.update(wrapper1);
-
-
 
 
         return Result.success();
