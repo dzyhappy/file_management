@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.StudentAssessment;
 import file_management.peoject.entity.SupervisorAssessment;
-import file_management.peoject.entity.TeachersWorks;
+import file_management.peoject.exception.BusinessException;
+import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.StudentAssessmentService;
 import file_management.peoject.service.SupervisorAssessmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,34 +39,46 @@ public class SupervisorAssessmentController {
         wrapper.eq(SupervisorAssessment::getTeacherId,teacherId);
         List<SupervisorAssessment> list = service.list(wrapper);
 
-
-        return Result.success("获取成功",list);
+        if (list==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", list);
+        }
     }
 
     @PostMapping("/supervisor/delete")
-    public Result delSupervisor(@RequestBody SupervisorAssessment assessment){
+    public Result delSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
 
-        service.removeById(assessment);
-
-        return Result.success();
+        boolean result = service.removeById(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @PostMapping("/supervisor/put")
-    public Result putSupervisor(@RequestBody SupervisorAssessment assessment){
+    public Result putSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
 
-        service.save(assessment);
-
-        return Result.success();
+        boolean result = service.save(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
 
 
     @PostMapping("/supervisor/patch")
-    public Result updateSupervisor(@RequestBody SupervisorAssessment assessment){
+    public Result updateSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
 
-        service.updateById(assessment);
-
-        return Result.success();
+        boolean result = service.updateById(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     /**
@@ -76,10 +89,6 @@ public class SupervisorAssessmentController {
     @GetMapping("/student/get")
     public Result getStudent(Integer teacherId){
 
-
-
-
-
         if(teacherId==null||teacherId.equals("")){
             List<StudentAssessment> list = assessmentService.list();
             Result.success("获取成功",list);
@@ -89,35 +98,47 @@ public class SupervisorAssessmentController {
         wrapper.eq(StudentAssessment::getTeacherId,teacherId);
         List<StudentAssessment> list = assessmentService.list(wrapper);
 
-
-        return Result.success("获取成功",list);
+        if (list==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", list);
+        }
     }
 
     @PostMapping("/student/delete")
-    public Result delStudent(@RequestBody StudentAssessment assessment){
+    public Result delStudent(@Valid @RequestBody StudentAssessment assessment){
 
-        assessmentService.removeById(assessment);
-
-        return Result.success();
+        boolean result = assessmentService.removeById(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @PostMapping("/student/put")
-    public Result putStudent(@RequestBody StudentAssessment assessment){
+    public Result putStudent(@Valid @RequestBody StudentAssessment assessment){
 
-        assessmentService.save(assessment);
-
-        return Result.success();
+        boolean result = assessmentService.save(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
 
 
     @PostMapping("/student/patch")
-    public Result updateStudent(@RequestBody StudentAssessment assessment){
+    public Result updateStudent(@Valid @RequestBody StudentAssessment assessment){
 
 
-        assessmentService.updateById(assessment);
-
-        return Result.success();
+        boolean result = assessmentService.updateById(assessment);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
 }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ public class TeacherStudentAward implements Serializable {
      * 唯一标识
      */
     @TableId(type = IdType.AUTO)
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
@@ -31,16 +34,19 @@ public class TeacherStudentAward implements Serializable {
     /**
      * 学院
      */
+    @NotBlank(message = "字段不为空")
     private String college;
 
     /**
      * 竞赛名称
      */
+    @NotBlank(message = "字段不为空")
     private String competitionName;
 
     /**
      * 参赛作品名称
      */
+    @NotBlank(message = "字段不为空")
     private String entryName;
 
     /**

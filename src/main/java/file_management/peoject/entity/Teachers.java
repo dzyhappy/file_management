@@ -3,8 +3,11 @@ package file_management.peoject.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 
@@ -17,46 +20,55 @@ public class Teachers implements Serializable {
      * 教师id
      */
     @TableId
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
      * 教师姓名
      */
+    @NotBlank(message = "教师名字不为空")
     private String teacherName;
 
     /**
      * 性别
      */
+    @NotBlank(message = "字段不为空")
     private String gender;
 
     /**
      * 教师年龄
      */
+    @NotBlank(message = "字段不为空")
     private String teacherAge;
 
     /**
      * 教师职称
      */
+    @NotBlank(message = "字段不为空")
     private String title;
 
     /**
      * 所在部门
      */
+    @NotBlank(message = "字段不为空")
     private String department;
 
     /**
      * 教师邮箱
      */
+    @NotBlank(message = "字段不为空")
     private String email;
 
     /**
      * 教师电话
      */
+    @NotBlank(message = "字段不为空")
     private String phone;
 
     /**
      * 教师id
      */
+    @NotNull(message = "id不能为空")
     private Integer teacherId;
 
     @TableField(exist = false)

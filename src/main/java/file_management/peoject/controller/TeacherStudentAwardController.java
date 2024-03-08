@@ -5,12 +5,15 @@ import file_management.peoject.common.Result;
 import file_management.peoject.entity.TeacherAward;
 import file_management.peoject.entity.TeacherStudentAward;
 import file_management.peoject.entity.dto.TeacherStudentAwardDTO;
+import file_management.peoject.exception.BusinessException;
+import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.TeacherStudentAwardService;
 import file_management.peoject.service.TearcherAwardService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,14 +48,17 @@ public class TeacherStudentAwardController {
         //     * 然后查询所有id
         List<TeacherStudentAward> list = teacherStudentAwardService.listByIds(collect);
 
-
-        return Result.success("查找成功",list);
+        if (list==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", list);
+        }
     }
 
 
 
     @PostMapping("/update")
-    public Result update(@RequestBody TeacherStudentAwardDTO teacher){
+    public Result update(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         //首先查询TeacherAward中的数据查询到所有的与该奖项有关的教师
         LambdaQueryWrapper<TeacherAward> wrapper =new LambdaQueryWrapper();
@@ -79,20 +85,26 @@ public class TeacherStudentAwardController {
             });
 
             //然后直接更新
-            teacherStudentAwardService.update(teacherStudentAward,wrapper1);
-            return Result.success();
+            boolean result = teacherStudentAwardService.update(teacherStudentAward, wrapper1);
+            if (!result){
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            }else {
+                return Result.success();
+            }
 
         }
 
         //如果为空 那么直接修改
-        teacherStudentAwardService.update(teacherStudentAward,wrapper1);
-
-
-        return Result.success();
+        boolean result = teacherStudentAwardService.update(teacherStudentAward, wrapper1);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestBody TeacherStudentAwardDTO teacher){
+    public Result delete(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         //从TeacherAward中获取所有和该奖项id有关的数据
         LambdaQueryWrapper<TeacherAward> wrapper1 =new LambdaQueryWrapper();
@@ -102,15 +114,18 @@ public class TeacherStudentAwardController {
 
         LambdaQueryWrapper<TeacherStudentAward> wrapper2 =new LambdaQueryWrapper();
         wrapper2.eq(TeacherStudentAward::getId,teacher.getId());
-        teacherStudentAwardService.remove(wrapper2);
+        boolean result = teacherStudentAwardService.remove(wrapper2);
 
-
-        return Result.success();
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     //新增时规定前端传的DTO里的teacherId的数据为一个list集合
     @PostMapping("/add")
-    public Result save(@RequestBody TeacherStudentAwardDTO teacher){
+    public Result save(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         List<Integer> teacherIds = teacher.getTeacherId();
 
@@ -137,8 +152,11 @@ public class TeacherStudentAwardController {
 
         List<TeacherStudentAward> list = teacherStudentAwardService.list();
 
-
-        return Result.success("查询成功",list);
+        if (list==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", list);
+        }
     }
 
 

@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 培养措施路径存储
@@ -18,21 +21,25 @@ public class ProfessMeasures implements Serializable {
      * 
      */
     @TableId(type = IdType.AUTO)
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
      * 教师姓名
      */
+    @NotBlank(message = "字段不为空")
     private String name;
 
     /**
      * 教师的工号
      */
+    @NotNull(message = "字段不为空")
     private Integer teacherId;
 
     /**
      * 文档id
      */
+    @NotNull(message = "字段不为空")
     private Integer fileId;
 
     /**
@@ -53,6 +60,7 @@ public class ProfessMeasures implements Serializable {
     /**
      * 
      */
+    @NotBlank(message = "字段不为空")
     private String createTime;
 
     /**

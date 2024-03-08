@@ -4,10 +4,13 @@ package file_management.peoject.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.Teachers;
+import file_management.peoject.exception.BusinessException;
+import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.TeachersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,51 +25,62 @@ public class TeachersController {
     public Result getInformation(Integer id){
 
         Teachers teacher = service.getById(id);
-
-
-        return Result.success("查询成功",teacher);
+        if (teacher==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", teacher);
+        }
     }
 
 
 
     @PostMapping("/update")
-    public Result updateInformation(@RequestBody Teachers teacher){
+    public Result updateInformation(@Valid @RequestBody Teachers teacher){
 
 
-        service.updateById(teacher);
+        boolean result = service.updateById(teacher);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
 
-        return Result.success();
     }
 
     @PostMapping("/delete")
-    public Result deleteInformation(@RequestBody Teachers teacher){
+    public Result deleteInformation(@Valid @RequestBody Teachers teacher){
 
         LambdaQueryWrapper<Teachers> wrapper =new LambdaQueryWrapper();
         wrapper.eq(Teachers::getTeacherId,teacher.getTeacherId());
 
-        service.remove(wrapper);
-
-
-        return Result.success();
+        boolean result = service.remove(wrapper);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @PostMapping("/upload")
-    public Result uploadInformation(@RequestBody Teachers teacher){
+    public Result uploadInformation(@Valid @RequestBody Teachers teacher){
 
-        boolean s = service.save(teacher);
-
-        if(!s){
-            return Result.fail("添加失败");
+        boolean result = service.save(teacher);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
         }
-
-        return Result.success();
     }
 
     @GetMapping("/all")
     public Result getall(){
 
         List<Teachers> list = service.list();
-        return Result.success("查询成功",list);
+        if(list==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else{
+            return Result.success("查询成功",list);
+        }
     }
 
 }

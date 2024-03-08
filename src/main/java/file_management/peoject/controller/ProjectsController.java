@@ -3,6 +3,8 @@ package file_management.peoject.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.Projects;
+import file_management.peoject.exception.BusinessException;
+import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,49 +23,53 @@ public class ProjectsController {
 
     //信息获取
     @PostMapping("/details")
-    public Result Details(@RequestBody Projects project){
+    public Result Details(@Valid @RequestBody Projects project){
 
         LambdaQueryWrapper<Projects> wrapper =new LambdaQueryWrapper();
 
         wrapper.eq(Projects::getTeacherId,project.getTeacherId());
 
         List<Projects> projects = projectService.list(wrapper);
-
-        return Result.success("成功",projects);
+        if (projects==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", projects);
+        }
     }
 
     @PostMapping("/save")
-    public Result Upload(@RequestBody Projects project){
+    public Result Upload(@Valid @RequestBody Projects project){
 
 
-        Boolean aBoolean = projectService.save(project);
-
-        if(!aBoolean){
-            return Result.fail("添加失败");
+        Boolean result = projectService.save(project);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
         }
-
-        return Result.success();
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody Projects project){
+    public Result update(@Valid @RequestBody Projects project){
 
-        boolean b = projectService.updateById(project);
-
-        if(!b){
-            return Result.fail("添加失败");
+        boolean result = projectService.updateById(project);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
         }
-
-        return Result.success();
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestBody Projects project){
+    public Result delete(@Valid @RequestBody Projects project){
 
 
-       projectService.removeById(project);
-
-        return Result.success();
+        boolean result = projectService.removeById(project);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
 }

@@ -2,10 +2,13 @@ package file_management.peoject.controller;
 
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.ProfessMeasures;
+import file_management.peoject.exception.BusinessException;
+import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.ProMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,31 +21,44 @@ public class ProMeasureController {
     @PostMapping("delmeasures")
     public Result delmeasures(@RequestParam Integer fileId ){
 
-        proMeasureService.DeleteByFileId(fileId);
-
-        return Result.success();
+        Boolean result = proMeasureService.DeleteByFileId(fileId);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @GetMapping("getmeasures")
     public Result getmeasures(@RequestParam Integer teacherId){
         List<ProfessMeasures> professMeasures = proMeasureService.GetAllByteacherId(teacherId);
-        return Result.success("查找成功",professMeasures);
+        if (professMeasures==null){
+            throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
+        }else {
+            return Result.success("查询成功", professMeasures);
+        }
     }
 
     @PostMapping("savemeasures")
-    public Result savemeasures(@RequestBody ProfessMeasures professMeasures){
+    public Result savemeasures(@Valid @RequestBody ProfessMeasures professMeasures){
 
-        proMeasureService.save(professMeasures);
-
-        return Result.success();
+        boolean result = proMeasureService.save(professMeasures);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
     @PostMapping("update")
-    public Result update(@RequestBody ProfessMeasures professMeasures){
+    public Result update(@Valid @RequestBody ProfessMeasures professMeasures){
 
-        proMeasureService.updateById(professMeasures);
-
-        return Result.success();
+        boolean result = proMeasureService.updateById(professMeasures);
+        if (!result){
+            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+        }else {
+            return Result.success();
+        }
     }
 
 

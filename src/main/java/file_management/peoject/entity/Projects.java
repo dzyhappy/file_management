@@ -3,11 +3,13 @@ package file_management.peoject.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 
@@ -20,11 +22,13 @@ public class Projects implements Serializable {
      * 项目id
      */
     @TableId
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
      * 项目名字
      */
+    @NotBlank(message = "字段不为空")
     private String projectName;
 
     /**
@@ -47,11 +51,13 @@ public class Projects implements Serializable {
     /**
      * 项目负责人ID, 外键关联到教师表
      */
+    @NotNull(message = "字段不为空")
     private Integer teacherId;
 
     /**
      * 项目等级
      */
+    @NotBlank(message = "字段不为空")
     private String level;
 
     /**

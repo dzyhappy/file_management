@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 
@@ -21,16 +23,19 @@ public class TeachersWorks implements Serializable {
      * 作品id
      */
     @TableId(type = IdType.AUTO)
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
      * 教师id
      */
+    @NotNull(message = "字段不为空")
     private Integer teacherId;
 
     /**
      * 著作论文名称
      */
+    @NotBlank(message = "字段不为空")
     private String workName;
 
     /**

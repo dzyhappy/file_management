@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,21 +23,25 @@ public class SupervisorAssessment implements Serializable {
      * 
      */
     @TableId(type = IdType.AUTO)
+    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
      * 课程名称
      */
+    @NotBlank(message = "字段不为空")
     private String courseName;
 
     /**
      * 教师编号
      */
+    @NotBlank(message = "字段不为空")
     private String teacherId;
 
     /**
      * 听课班级
      */
+    @NotBlank(message = "字段不为空")
     private String cls;
 
     /**
