@@ -73,7 +73,7 @@ public class TeacherStudentAwardController {
             //然后重新存
             TeacherAward award =new TeacherAward();
             award.setAwardId(teacher.getId());
-            teacherids.forEach(id->{
+            teacher.getTeacherId().forEach(id->{
                 award.setTeacherId(id);
                 tearcherAwardService.save(award);
             });
@@ -85,7 +85,7 @@ public class TeacherStudentAwardController {
         }
 
         //如果为空 那么直接修改
-        teacherStudentAwardService.update(wrapper1);
+        teacherStudentAwardService.update(teacherStudentAward,wrapper1);
 
 
         return Result.success();
@@ -111,6 +111,7 @@ public class TeacherStudentAwardController {
     //新增时规定前端传的DTO里的teacherId的数据为一个list集合
     @PostMapping("/add")
     public Result save(@RequestBody TeacherStudentAwardDTO teacher){
+
         List<Integer> teacherIds = teacher.getTeacherId();
 
         TeacherStudentAward teacherStudentAward =new TeacherStudentAward();
