@@ -1,6 +1,7 @@
 package file_management.peoject.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.Teachers;
 import file_management.peoject.service.TeachersService;
@@ -31,6 +32,7 @@ public class TeachersController {
     @PostMapping("/update")
     public Result updateInformation(@RequestBody Teachers teacher){
 
+
         service.updateById(teacher);
 
         return Result.success();
@@ -39,7 +41,10 @@ public class TeachersController {
     @PostMapping("/delete")
     public Result deleteInformation(@RequestBody Teachers teacher){
 
-        service.removeById(teacher);
+        LambdaQueryWrapper<Teachers> wrapper =new LambdaQueryWrapper();
+        wrapper.eq(Teachers::getTeacherId,teacher.getTeacherId());
+
+        service.remove(wrapper);
 
 
         return Result.success();
