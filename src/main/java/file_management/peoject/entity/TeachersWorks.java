@@ -23,7 +23,6 @@ public class TeachersWorks implements Serializable {
      * 作品id
      */
     @TableId(type = IdType.AUTO)
-    @NotNull(message = "id不为空")
     private Integer id;
 
     /**

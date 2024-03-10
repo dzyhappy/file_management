@@ -21,7 +21,6 @@ public class ProfessMeasures implements Serializable {
      * 
      */
     @TableId(type = IdType.AUTO)
-    @NotNull(message = "id不为空")
     private Integer id;
 
     /**

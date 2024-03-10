@@ -20,7 +20,6 @@ public class Teachers implements Serializable {
      * 教师id
      */
     @TableId
-    @NotNull(message = "id不为空")
     private Integer id;
 
     /**

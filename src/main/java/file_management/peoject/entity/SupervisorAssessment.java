@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,7 +22,6 @@ public class SupervisorAssessment implements Serializable {
      * 
      */
     @TableId(type = IdType.AUTO)
-    @NotNull(message = "id不为空")
     private Integer id;
 
     /**

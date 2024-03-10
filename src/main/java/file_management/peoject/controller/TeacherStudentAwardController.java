@@ -11,6 +11,7 @@ import file_management.peoject.service.TeacherStudentAwardService;
 import file_management.peoject.service.TearcherAwardService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,6 +59,7 @@ public class TeacherStudentAwardController {
 
 
     @PostMapping("/update")
+    @Transactional
     public Result update(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         //首先查询TeacherAward中的数据查询到所有的与该奖项有关的教师
@@ -104,13 +106,13 @@ public class TeacherStudentAwardController {
     }
 
     @PostMapping("/delete")
+    @Transactional
     public Result delete(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         //从TeacherAward中获取所有和该奖项id有关的数据
         LambdaQueryWrapper<TeacherAward> wrapper1 =new LambdaQueryWrapper();
         wrapper1.eq(TeacherAward::getAwardId,teacher.getId());
         tearcherAwardService.remove(wrapper1);
-
 
         LambdaQueryWrapper<TeacherStudentAward> wrapper2 =new LambdaQueryWrapper();
         wrapper2.eq(TeacherStudentAward::getId,teacher.getId());
@@ -125,6 +127,7 @@ public class TeacherStudentAwardController {
 
     //新增时规定前端传的DTO里的teacherId的数据为一个list集合
     @PostMapping("/add")
+    @Transactional
     public Result save(@Valid @RequestBody TeacherStudentAwardDTO teacher){
 
         List<Integer> teacherIds = teacher.getTeacherId();

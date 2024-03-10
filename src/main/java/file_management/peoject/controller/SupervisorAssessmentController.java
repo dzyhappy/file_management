@@ -28,8 +28,6 @@ public class SupervisorAssessmentController {
     @GetMapping("/supervisor/get")
     public Result getSupervisor(Integer teacherId){
 
-
-
         if(teacherId==null||teacherId.equals("")){
             List<SupervisorAssessment> list = service.list();
             Result.success("获取成功",list);
@@ -91,7 +89,7 @@ public class SupervisorAssessmentController {
 
         if(teacherId==null||teacherId.equals("")){
             List<StudentAssessment> list = assessmentService.list();
-            Result.success("获取成功",list);
+            return Result.success("获取成功",list);
         }
 
         LambdaQueryWrapper<StudentAssessment> wrapper =new LambdaQueryWrapper();

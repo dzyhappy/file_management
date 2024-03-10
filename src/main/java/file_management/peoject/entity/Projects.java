@@ -22,7 +22,6 @@ public class Projects implements Serializable {
      * 项目id
      */
     @TableId
-    @NotNull(message = "id不为空")
     private Integer id;
 
     /**
