@@ -8,10 +8,7 @@ import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,14 +20,16 @@ public class ProjectsController {
     ProjectsService projectService;
 
     //信息获取
-    @PostMapping("/details")
-    public Result Details(@RequestBody Projects project){
-
-        LambdaQueryWrapper<Projects> wrapper =new LambdaQueryWrapper();
-
-        wrapper.eq(Projects::getTeacherId,project.getTeacherId());
-
-        List<Projects> projects = projectService.list(wrapper);
+    @GetMapping("/details")
+    public Result Details(Integer teacherId){
+        List<Projects> projects =null;
+        if(teacherId==null){
+            projects=projectService.list();
+        }else{
+            LambdaQueryWrapper<Projects> wrapper =new LambdaQueryWrapper();
+            wrapper.eq(Projects::getTeacherId,teacherId);
+            projects=projectService.list(wrapper);
+        }
         if (projects==null){
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
         }else {

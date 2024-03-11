@@ -60,13 +60,13 @@ public class TeachersWorks implements Serializable {
     /**
      * 发表时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date publishTime;
 
     /**
      * 记录时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date recordTime;
 
     @TableField(exist = false)

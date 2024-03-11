@@ -52,7 +52,7 @@ public class StudentAssessment implements Serializable {
     /**
      * 开始年份
      */
-    private String year;
+    private Integer year;
 
     /**
      * 上下学期

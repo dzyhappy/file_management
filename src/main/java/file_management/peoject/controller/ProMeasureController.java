@@ -20,52 +20,56 @@ public class ProMeasureController {
     @Autowired
     ProMeasureService proMeasureService;
 
-    @PostMapping("delmeasures")
-    public Result delmeasures(@RequestParam Integer fileId){
+    @PostMapping("/delmeasures")
+    public Result delmeasures(@RequestParam Integer fileId) {
 
         Boolean result = proMeasureService.DeleteByFileId(fileId);
-        if (!result){
+        if (!result) {
             throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
-        }else {
+        } else {
             return Result.success();
         }
     }
 
-    @GetMapping("getmeasures")
-    public Result getmeasures(@RequestParam Integer teacherId){
-
-        LambdaQueryWrapper<ProfessMeasures> lambdaQueryWrapper=new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(ProfessMeasures::getTeacherId,teacherId);
-        List<ProfessMeasures> professMeasures = proMeasureService.list(lambdaQueryWrapper);
-        if (professMeasures==null){
+    @GetMapping("/getmeasures")
+    public Result getmeasures( Integer teacherId) {
+        List<ProfessMeasures> professMeasures = null;
+        if (teacherId == null) {
+            professMeasures = proMeasureService.list();
+        } else {
+            LambdaQueryWrapper<ProfessMeasures> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(ProfessMeasures::getTeacherId, teacherId);
+            professMeasures=proMeasureService.list(lambdaQueryWrapper);
+        }
+        if (professMeasures == null) {
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
-        }else {
+        } else {
             return Result.success("查询成功", professMeasures);
         }
     }
 
-    @PostMapping("savemeasures")
-    public Result savemeasures(@Valid @RequestBody ProfessMeasures professMeasures){
+    @PostMapping("/savemeasures")
+    public Result savemeasures(@Valid @RequestBody ProfessMeasures professMeasures) {
 
         try {
-        boolean result = proMeasureService.save(professMeasures);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
-        }
-        }catch (DataAccessException e){
+            boolean result = proMeasureService.save(professMeasures);
+            if (!result) {
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            } else {
+                return Result.success();
+            }
+        } catch (DataAccessException e) {
             throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 
-    @PostMapping("update")
-    public Result update(@RequestBody ProfessMeasures professMeasures){
+    @PostMapping("/update")
+    public Result update(@RequestBody ProfessMeasures professMeasures) {
 
         boolean result = proMeasureService.updateById(professMeasures);
-        if (!result){
+        if (!result) {
             throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
+        } else {
             return Result.success();
         }
     }

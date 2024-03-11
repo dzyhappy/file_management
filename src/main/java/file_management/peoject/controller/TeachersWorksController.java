@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * 获奖情况
  */
+
 @RestController
 @RequestMapping("/teachers_works")
 public class TeachersWorksController {
@@ -26,11 +27,15 @@ public class TeachersWorksController {
     TeachersWorksService service;
 
     @GetMapping("/getwork")
-    public Result getWork(@RequestParam Integer teacherId) {
-
-        LambdaQueryWrapper<TeachersWorks> wrapper =new LambdaQueryWrapper();
-        wrapper.eq(TeachersWorks::getTeacherId,teacherId);
-        List<TeachersWorks> list = service.list(wrapper);
+    public Result getWork(Integer teacherId) {
+            List<TeachersWorks> list =null;
+        if(teacherId==null){
+             list = service.list();
+        }else{
+            LambdaQueryWrapper<TeachersWorks> wrapper =new LambdaQueryWrapper();
+            wrapper.eq(TeachersWorks::getTeacherId,teacherId);
+            list = service.list(wrapper);
+        }
         if (list==null){
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
         }else {

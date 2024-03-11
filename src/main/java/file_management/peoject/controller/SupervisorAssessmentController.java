@@ -101,6 +101,8 @@ public class SupervisorAssessmentController {
         wrapper.eq(StudentAssessment::getTeacherId,teacherId);
         List<StudentAssessment> list = assessmentService.list(wrapper);
 
+
+        System.out.println(list);
         if (list==null){
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
         }else {
