@@ -10,6 +10,7 @@ import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.StudentAssessmentService;
 import file_management.peoject.service.SupervisorAssessmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,7 +46,7 @@ public class SupervisorAssessmentController {
     }
 
     @PostMapping("/supervisor/delete")
-    public Result delSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
+    public Result delSupervisor(@RequestBody SupervisorAssessment assessment){
 
         boolean result = service.removeById(assessment);
         if (!result){
@@ -58,18 +59,22 @@ public class SupervisorAssessmentController {
     @PostMapping("/supervisor/put")
     public Result putSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
 
-        boolean result = service.save(assessment);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
+        try {
+            boolean result = service.save(assessment);
+            if (!result){
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            }else {
+                return Result.success();
+            }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 
 
 
     @PostMapping("/supervisor/patch")
-    public Result updateSupervisor(@Valid @RequestBody SupervisorAssessment assessment){
+    public Result updateSupervisor(@RequestBody SupervisorAssessment assessment){
 
         boolean result = service.updateById(assessment);
         if (!result){
@@ -104,7 +109,7 @@ public class SupervisorAssessmentController {
     }
 
     @PostMapping("/student/delete")
-    public Result delStudent(@Valid @RequestBody StudentAssessment assessment){
+    public Result delStudent(@RequestBody StudentAssessment assessment){
 
         boolean result = assessmentService.removeById(assessment);
         if (!result){
@@ -117,19 +122,22 @@ public class SupervisorAssessmentController {
     @PostMapping("/student/put")
     public Result putStudent(@Valid @RequestBody StudentAssessment assessment){
 
-        boolean result = assessmentService.save(assessment);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
+        try {
+            boolean result = assessmentService.save(assessment);
+            if (!result){
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            }else {
+                return Result.success();
+            }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 
 
 
     @PostMapping("/student/patch")
-    public Result updateStudent(@Valid @RequestBody StudentAssessment assessment){
-
+    public Result updateStudent(@RequestBody StudentAssessment assessment){
 
         boolean result = assessmentService.updateById(assessment);
         if (!result){

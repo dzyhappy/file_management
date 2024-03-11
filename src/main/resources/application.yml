@@ -41,7 +41,6 @@ mybatis-plus:
 logging:
   level:
     com.file_management.project: debug
-#  输出日志到文件，日志设置已经由logback-spring.xml接管，日志无需另外设置
 
 #文件存储位置
 #file:${user.dir}代表的位置是工程根目录下。
@@ -50,7 +49,7 @@ file:
     dir: ${user.dir}/upload
 
 
-# 一些自由配置
+# 自由配置
 fileManagement:
   #访问路径
   path:

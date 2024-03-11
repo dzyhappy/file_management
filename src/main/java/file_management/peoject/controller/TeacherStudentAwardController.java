@@ -39,7 +39,7 @@ public class TeacherStudentAwardController {
      * @return
      */
     @GetMapping("/get")
-    public Result get(Integer id){
+    public Result get(@RequestParam Integer id){
 
         //     * 根据从TeacherAward表中获取所有与其有关的奖项的id
         LambdaQueryWrapper<TeacherAward> wrapper =new LambdaQueryWrapper();
@@ -107,7 +107,7 @@ public class TeacherStudentAwardController {
 
     @PostMapping("/delete")
     @Transactional
-    public Result delete(@Valid @RequestBody TeacherStudentAwardDTO teacher){
+    public Result delete(@RequestBody TeacherStudentAwardDTO teacher){
 
         //从TeacherAward中获取所有和该奖项id有关的数据
         LambdaQueryWrapper<TeacherAward> wrapper1 =new LambdaQueryWrapper();

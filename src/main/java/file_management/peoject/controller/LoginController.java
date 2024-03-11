@@ -19,7 +19,6 @@ public class LoginController implements NameConstant {
 
     @PostMapping("/login")
     public Result login(@RequestBody User user){
-        System.out.println("hhh");
         return userService.login(user);
     }
 }

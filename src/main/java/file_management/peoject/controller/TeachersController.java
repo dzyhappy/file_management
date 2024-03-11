@@ -8,6 +8,7 @@ import file_management.peoject.exception.BusinessException;
 import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.TeachersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,7 +38,6 @@ public class TeachersController {
     @PostMapping("/update")
     public Result updateInformation(@Valid @RequestBody Teachers teacher){
 
-
         boolean result = service.updateById(teacher);
         if (!result){
             throw new BusinessException(BusinessExceptionEnum.Write_Failed);
@@ -48,7 +48,7 @@ public class TeachersController {
     }
 
     @PostMapping("/delete")
-    public Result deleteInformation(@Valid @RequestBody Teachers teacher){
+    public Result deleteInformation(@RequestBody Teachers teacher){
 
         LambdaQueryWrapper<Teachers> wrapper =new LambdaQueryWrapper();
         wrapper.eq(Teachers::getTeacherId,teacher.getTeacherId());
@@ -64,11 +64,15 @@ public class TeachersController {
     @PostMapping("/upload")
     public Result uploadInformation(@Valid @RequestBody Teachers teacher){
 
-        boolean result = service.save(teacher);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
+        try {
+            boolean result = service.save(teacher);
+            if (!result) {
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            } else {
+                return Result.success();
+            }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 

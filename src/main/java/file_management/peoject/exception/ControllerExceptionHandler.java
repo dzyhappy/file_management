@@ -4,6 +4,7 @@ import file_management.peoject.common.Result;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,6 +59,14 @@ public class ControllerExceptionHandler {
             errorMessage.delete(errorMessage.length() - 2, errorMessage.length());
         }
         return Result.fail(errorMessage.toString());
+    }
+
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    @ResponseBody
+    public Result handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        // 构造错误信息
+        String errorMessage = "缺少请求参数: " + e.getParameterName();
+        return Result.fail(errorMessage);
     }
 
 }

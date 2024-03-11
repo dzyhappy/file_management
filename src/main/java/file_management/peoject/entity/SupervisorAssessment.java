@@ -82,7 +82,8 @@ public class SupervisorAssessment implements Serializable {
     /**
      * 年份
      */
-    private Object year;
+
+    private String year;
 
     /**
      * 综合评分

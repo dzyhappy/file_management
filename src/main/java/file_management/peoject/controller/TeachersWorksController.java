@@ -8,6 +8,7 @@ import file_management.peoject.exception.BusinessException;
 import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.TeachersWorksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class TeachersWorksController {
     TeachersWorksService service;
 
     @GetMapping("/getwork")
-    public Result getWork(Integer teacherId) {
+    public Result getWork(@RequestParam Integer teacherId) {
 
         LambdaQueryWrapper<TeachersWorks> wrapper =new LambdaQueryWrapper();
         wrapper.eq(TeachersWorks::getTeacherId,teacherId);
@@ -38,7 +39,7 @@ public class TeachersWorksController {
     }
 
     @PostMapping("/delwork")
-    public Result delWork(@Valid @RequestBody TeachersWorks teachersWorks) {
+    public Result delWork(@RequestBody TeachersWorks teachersWorks) {
 
         boolean result = service.removeById(teachersWorks);
         if (!result){
@@ -51,17 +52,21 @@ public class TeachersWorksController {
     @PostMapping("/uploadwork")
     public Result uploadwork(@Valid @RequestBody TeachersWorks teachersWorks) {
 
-        boolean result = service.save(teachersWorks);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
+        try {
+            boolean result = service.save(teachersWorks);
+            if (!result){
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            }else {
+                return Result.success();
+            }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 
     @PostMapping("/updatework")
     public Result updatework(@Valid @RequestBody TeachersWorks teachersWorks) {
-
+        
         boolean result = service.updateById(teachersWorks);
         if (!result){
             throw new BusinessException(BusinessExceptionEnum.Write_Failed);

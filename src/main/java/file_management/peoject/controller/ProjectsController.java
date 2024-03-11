@@ -7,6 +7,7 @@ import file_management.peoject.exception.BusinessException;
 import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,17 +41,20 @@ public class ProjectsController {
     @PostMapping("/save")
     public Result Upload(@Valid @RequestBody Projects project){
 
-
-        Boolean result = projectService.save(project);
-        if (!result){
-            throw new BusinessException(BusinessExceptionEnum.Write_Failed);
-        }else {
-            return Result.success();
+        try {
+            Boolean result = projectService.save(project);
+            if (!result){
+                throw new BusinessException(BusinessExceptionEnum.Write_Failed);
+            }else {
+                return Result.success();
+            }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
         }
     }
 
     @PostMapping("/update")
-    public Result update(@Valid @RequestBody Projects project){
+    public Result update(@RequestBody Projects project){
 
         boolean result = projectService.updateById(project);
         if (!result){
@@ -61,8 +65,7 @@ public class ProjectsController {
     }
 
     @PostMapping("/delete")
-    public Result delete(@Valid @RequestBody Projects project){
-
+    public Result delete(@RequestBody Projects project){
 
         boolean result = projectService.removeById(project);
         if (!result){

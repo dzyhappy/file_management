@@ -1,11 +1,13 @@
 package file_management.peoject.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.ProfessMeasures;
 import file_management.peoject.exception.BusinessException;
 import file_management.peoject.exception.BusinessExceptionEnum;
 import file_management.peoject.service.ProMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +21,7 @@ public class ProMeasureController {
     ProMeasureService proMeasureService;
 
     @PostMapping("delmeasures")
-    public Result delmeasures(@RequestParam Integer fileId ){
+    public Result delmeasures(@RequestParam Integer fileId){
 
         Boolean result = proMeasureService.DeleteByFileId(fileId);
         if (!result){
@@ -31,7 +33,10 @@ public class ProMeasureController {
 
     @GetMapping("getmeasures")
     public Result getmeasures(@RequestParam Integer teacherId){
-        List<ProfessMeasures> professMeasures = proMeasureService.GetAllByteacherId(teacherId);
+
+        LambdaQueryWrapper<ProfessMeasures> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ProfessMeasures::getTeacherId,teacherId);
+        List<ProfessMeasures> professMeasures = proMeasureService.list(lambdaQueryWrapper);
         if (professMeasures==null){
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
         }else {
@@ -42,16 +47,20 @@ public class ProMeasureController {
     @PostMapping("savemeasures")
     public Result savemeasures(@Valid @RequestBody ProfessMeasures professMeasures){
 
+        try {
         boolean result = proMeasureService.save(professMeasures);
         if (!result){
             throw new BusinessException(BusinessExceptionEnum.Write_Failed);
         }else {
             return Result.success();
         }
+        }catch (DataAccessException e){
+            throw new BusinessException(BusinessExceptionEnum.SQL_Failed);
+        }
     }
 
     @PostMapping("update")
-    public Result update(@Valid @RequestBody ProfessMeasures professMeasures){
+    public Result update(@RequestBody ProfessMeasures professMeasures){
 
         boolean result = proMeasureService.updateById(professMeasures);
         if (!result){
