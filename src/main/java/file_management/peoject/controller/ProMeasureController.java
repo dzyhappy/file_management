@@ -21,9 +21,9 @@ public class ProMeasureController {
     ProMeasureService proMeasureService;
 
     @PostMapping("/delmeasures")
-    public Result delmeasures(@RequestParam Integer fileId) {
+    public Result delmeasures(@RequestBody ProfessMeasures professMeasures) {
 
-        Boolean result = proMeasureService.DeleteByFileId(fileId);
+        Boolean result = proMeasureService.DeleteByFileId(professMeasures.getId());
         if (!result) {
             throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
         } else {

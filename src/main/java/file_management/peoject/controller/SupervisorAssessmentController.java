@@ -31,7 +31,7 @@ public class SupervisorAssessmentController {
 
         if(teacherId==null||teacherId.equals("")){
             List<SupervisorAssessment> list = service.list();
-            Result.success("获取成功",list);
+           return  Result.success("获取成功",list);
         }
 
         LambdaQueryWrapper<SupervisorAssessment> wrapper =new LambdaQueryWrapper();

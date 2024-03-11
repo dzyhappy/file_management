@@ -32,7 +32,7 @@ public class ProfessMeasures implements Serializable {
     /**
      * 教师的工号
      */
-    @NotBlank
+
     private Integer teacherId;
 
     /**

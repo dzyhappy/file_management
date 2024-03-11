@@ -50,10 +50,10 @@ public class TeachersController {
     @PostMapping("/delete")
     public Result deleteInformation(@RequestBody Teachers teacher){
 
-        LambdaQueryWrapper<Teachers> wrapper =new LambdaQueryWrapper();
-        wrapper.eq(Teachers::getTeacherId,teacher.getTeacherId());
+//        LambdaQueryWrapper<Teachers> wrapper =new LambdaQueryWrapper();
+//        wrapper.eq(Teachers::getTeacherId,teacher.getTeacherId());
 
-        boolean result = service.remove(wrapper);
+        boolean result = service.removeById(teacher);
         if (!result){
             throw new BusinessException(BusinessExceptionEnum.Delete_Failed);
         }else {

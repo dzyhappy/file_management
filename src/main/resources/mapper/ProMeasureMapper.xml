@@ -15,7 +15,7 @@
         WHERE file_id = #{fileId}
     </update>
     <delete id="DeleteByFileId">
-        delete from profess_measures where file_id=#{fileid}
+        delete from profess_measures where id=#{id}
     </delete>
     <select id="GetAllByteacherId" resultType="file_management.peoject.entity.ProfessMeasures">
         select  * from profess_measures where teacher_id=#{teacherid}
