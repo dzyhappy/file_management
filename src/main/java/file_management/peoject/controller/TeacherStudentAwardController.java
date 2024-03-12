@@ -1,6 +1,7 @@
 package file_management.peoject.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import file_management.peoject.common.Result;
 import file_management.peoject.entity.TeacherAward;
 import file_management.peoject.entity.TeacherStudentAward;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -154,11 +156,29 @@ public class TeacherStudentAwardController {
     public Result getall(){
 
         List<TeacherStudentAward> list = teacherStudentAwardService.list();
+        List<TeacherStudentAwardDTO> list1 = new ArrayList<TeacherStudentAwardDTO>();
 
-        if (list==null){
+        for (TeacherStudentAward teacherStudentAward : list) {
+            TeacherStudentAwardDTO dto = new TeacherStudentAwardDTO();
+            LambdaQueryWrapper<TeacherAward> wrapper =new LambdaQueryWrapper<>();
+            wrapper.eq(TeacherAward::getAwardId, teacherStudentAward.getId());
+            List<TeacherAward> list2 = tearcherAwardService.list(wrapper);
+            List<Integer> collect = list2.stream().map(id -> {
+                return id.getTeacherId();
+            }).collect(Collectors.toList());
+
+            dto.setTeacherId(collect);
+            BeanUtils.copyProperties(teacherStudentAward,dto);
+
+            list1.add(dto);
+        }
+
+
+
+        if (list1==null){
             throw new BusinessException(BusinessExceptionEnum.NULL_CHECK);
         }else {
-            return Result.success("查询成功", list);
+            return Result.success("查询成功", list1);
         }
     }
 
